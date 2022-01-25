@@ -1,0 +1,118 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Description: <your stack description here>
+
+# Available top-level fields are listed in code completion
+
+# Add Resources Here: uncomment the following lines
+Resources:
+  CastodiaManagerController:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: CastodiaManagerController/
+      Description: ManagerController
+      
+      Handler: lambda_function.lambda_handler
+      Layers:
+        - arn:aws:lambda:us-east-1:149423131719:layer:cryptography:1
+        - arn:aws:lambda:us-east-1:149423131719:layer:common-layers:1
+        - arn:aws:lambda:us-east-1:580247275435:layer:LambdaInsightsExtension:16
+      Runtime: python3.8
+      Events:
+        ManagerController:
+          Type: Api
+          Properties:
+            Path: /user
+            Method: POST
+  CastodiaEmailController:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: CastodiaEmailController/
+      Description: EmaiLController
+      Handler: lambda_function.lambda_handler
+      Layers:
+        - arn:aws:lambda:us-east-1:149423131719:layer:common-layers:1
+        - arn:aws:lambda:us-east-1:580247275435:layer:LambdaInsightsExtension:16
+      Runtime: python3.8
+      Events:
+        EmailController:
+          Type: Api
+          Properties:
+            Path: /email
+            Method: POST
+  # CastodiaBillingController:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     CodeUri: CastodiaBillingController/
+  #     Description: BillingController
+  #     Handler: lambda_function.lambda_handler
+  #     Layers:
+  #       - arn:aws:lambda:us-east-1:149423131719:layer:common-layers:1
+  #     Runtime: python3.8
+  #     Events:
+  #       BillingController:
+  #         Type: Api
+  #         Properties:
+  #           Path: /billing
+  #           Method: POST
+  CastodiaStripeController:
+    Type: AWS::Serverless::Function
+    Properties:
+        CodeUri: CastodiaStripeController
+        Description: StripeController
+        Handler: lambda_function.lambda_handler
+        Layers:
+          - arn:aws:lambda:us-east-1:149423131719:layer:common-layers:1
+        Runtime: python3.8
+        Events:
+          StripeController:
+            Type: Api
+            Properties:
+              Path: /stripe
+              Method: POST
+  CastodiaWorkspaceController:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: CastodiaWorkspaceController
+      Description: OrganizationController
+      Handler: lambda_function.lambda_handler
+      Layers:
+        - arn:aws:lambda:us-east-1:149423131719:layer:common-layers:1
+      Runtime: python3.8
+      Events:
+        WorkspaceController:
+          Type: Api
+          Properties:
+            Path: /workspace
+            Method: POST
+  CastodiaDatabaseManager:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: CastodiaDatabaseController
+      Description: DatabaseController
+      Handler: lambda_function.lambda_handler
+      Layers:
+        - arn:aws:lambda:us-east-1:149423131719:layer:common-layers:1
+      Runtime: python3.8
+      Events:
+        DatabaseController:
+          Type: Api
+          Properties:
+            Path: /database
+            Method: POST
+  CastodiaQueryController:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: CastodiaQueryController
+      Description: QueryController
+      Handler: lambda_function.lambda_handler
+      Layers:
+      - arn:aws:lambda:us-east-1:149423131719:layer:common-layers:1
+      Runtime: python3.8
+      Events:
+        QueryController:
+          Type: Api
+          Properties:
+            Path: /query
+            Method: POST
